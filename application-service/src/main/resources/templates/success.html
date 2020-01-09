@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Başvuru Durumu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Başvurunuz Alındı</h1>
+    <p th:text="'Başvuru numaranız: ' + ${applicationModel.id}"></p>
+    <a th:href="'/applications/' + ${applicationModel.id}">Başvuru detaylarını görüntüle</a>
+    <br />
+    <p>E-posta gönderildi.</p>
+
+</body>
+</html>

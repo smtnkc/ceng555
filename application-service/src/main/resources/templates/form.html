@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Başvuru Formu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance:textfield;
+        }
+    </style>
+</head>
+<body>
+<h1>Başvuru Formu</h1>
+<form action="#" th:action="@{/application}" th:object="${applicationModel}" method="post">
+    <table>
+        <tr>
+            <td>ADI SOYADI:</td>
+            <td><input type="text" th:field="*{name}" autofocus/></td>
+        </tr>
+        <tr>
+            <td>ALES PUANI:</td>
+            <td><input type="number" step="0.01" th:field="*{alesScore}" onfocus="this.value=''" /></td>
+        </tr>
+        <tr>
+            <td>YDS PUANI:</td>
+            <td><input type="number" step="0.01" th:field="*{ydsScore}" onfocus="this.value=''" /></td>
+        </tr>
+        <tr>
+            <td>E-POSTA:</td>
+            <td><input type="text" th:field="*{email}" autofocus/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Kaydet" /> <input type="reset" value="Sıfırla" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
