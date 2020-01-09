@@ -32,7 +32,7 @@ public class ApplicationController {
         model.addAttribute("applicationModel", application); // to use in success.html
         applicationService.addApplication(application);
         ResponseEntity<String> result = restTemplate.exchange("http://localhost:8002/notification/email/" +
-                application.getId(), HttpMethod.GET, null, String.class);
+                application.getApplicationId(), HttpMethod.GET, null, String.class);
         return "success";
     }
 
@@ -42,9 +42,9 @@ public class ApplicationController {
         return applicationService.getApplicationList();
     }
 
-    @GetMapping("/applications/{id}")
+    @GetMapping("/applications/{applicationId}")
     @ResponseBody
-    public Application getApplication(@PathVariable long id) {
-        return applicationService.getApplication(id);
+    public Application getApplication(@PathVariable String applicationId) {
+        return applicationService.getApplication(applicationId);
     }
 }

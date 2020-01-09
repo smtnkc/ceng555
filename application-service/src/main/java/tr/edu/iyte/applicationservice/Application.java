@@ -3,32 +3,42 @@ package tr.edu.iyte.applicationservice;
 import java.util.Random;
 
 public class Application {
-    private long id;
+    private String applicationId;
+    private String personalId;
     private String name;
     private String email;
     private double alesScore;
     private double ydsScore;
+    private double gpaScore;
 
     public Application() {
         Random rand = new Random();
-        this.id = rand.nextInt((99999 - 10000) + 1) + 10000;
+        this.applicationId = Integer.toString(rand.nextInt((99999 - 10000) + 1) + 10000);
     }
 
-    public Application(long id, String name, String email, double alesScore, double ydsScore) {
-        this.id = id;
+    public Application(String applicationId, String personalId, String name, String email,
+                       double alesScore, double ydsScore, double gpaScore) {
+
+        this.applicationId = applicationId;
+        this.personalId = personalId;
         this.name = name;
         this.email = email;
         this.alesScore = alesScore;
         this.ydsScore = ydsScore;
+        this.gpaScore = gpaScore;
     }
 
-    public long getId() {
-        return id;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
+
+    public String getPersonalId() { return personalId; }
+
+    public void setPersonalId(String personalId) { this.personalId = personalId; }
 
     public String getName() {
         return name;
@@ -53,4 +63,8 @@ public class Application {
     public double getYdsScore() { return ydsScore; }
 
     public void setYdsScore(double ydsScore) { this.ydsScore = ydsScore; }
+
+    public double getGpaScore() { return gpaScore; }
+
+    public void setGpaScore(double gpaScore) { this.gpaScore = gpaScore; }
 }

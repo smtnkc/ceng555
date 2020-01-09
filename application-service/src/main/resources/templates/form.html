@@ -19,8 +19,12 @@
 <form action="#" th:action="@{/application}" th:object="${applicationModel}" method="post">
     <table>
         <tr>
+            <td>KİMLİK NUMARASI:</td>
+            <td><input type="number" th:field="*{personalId}" autofocus onfocus="this.value=''"/></td>
+        </tr>
+        <tr>
             <td>ADI SOYADI:</td>
-            <td><input type="text" th:field="*{name}" autofocus/></td>
+            <td><input type="text" th:field="*{name}"/></td>
         </tr>
         <tr>
             <td>ALES PUANI:</td>
@@ -31,7 +35,11 @@
             <td><input type="number" step="0.01" th:field="*{ydsScore}" onfocus="this.value=''" /></td>
         </tr>
         <tr>
-            <td>E-POSTA:</td>
+            <td>NOT ORTALAMASI:</td>
+            <td><input type="number" step="0.01" th:field="*{gpaScore}" onfocus="this.value=''" /></td>
+        </tr>
+        <tr>
+            <td>E-POSTA ADRESİ:</td>
             <td><input type="text" th:field="*{email}" autofocus/></td>
         </tr>
         <tr>

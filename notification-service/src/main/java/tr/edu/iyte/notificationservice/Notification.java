@@ -2,39 +2,20 @@ package tr.edu.iyte.notificationservice;
 
 public class Notification {
 
-    private long id;
-    private String mail;
-    private String name;
+    private Application application;
 
     public Notification() {
     }
 
-    public Notification(String mail, String name, long id){
-        this.name=name;
-        this.mail=mail;
-        this.id=id;
-    }
-    public String getMail() {
-        return mail;
+    public Notification(Application application) {
+        this.application = application;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public Application getApplication() {
+        return application;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 }

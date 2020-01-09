@@ -27,7 +27,7 @@ public class ApplicationList {
         this.applications.add(application);
     }
 
-    public Application getApplication(long id) {
-        return applications.stream().filter(a -> a.getId() == id).findFirst().get();
+    public Application getApplication(String applicationId) {
+        return applications.stream().filter(a -> a.getApplicationId().equals(applicationId)).findFirst().get();
     }
 }

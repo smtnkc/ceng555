@@ -18,11 +18,12 @@ public class NotificationController {
 
     @Autowired
     private RestTemplate restTemplate;
-    @RequestMapping("/email/{id}")
-    public String notificationMail (@PathVariable("id") long id){
-        RestTemplate restTemplate = new RestTemplate();
-        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + id,
+    @RequestMapping("/email/{applicationId}")
+    public String notificationMail(@PathVariable("applicationId") String applicationId){
+
+        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + applicationId,
                 Application.class);
+
         final String username = "ceng555grad@gmail.com";
         final String password = "cdbzxudnmjnsmlqv";
 
@@ -47,14 +48,16 @@ public class NotificationController {
                     Message.RecipientType.TO,
                     InternetAddress.parse(application.getEmail())
             );
-            message.setSubject("Grad Program Application");
+            message.setSubject("Lisansüstü Başvuru");
             message.setText("Sayın " + application.getName() +
                     ",\n\nLisansüstü başvurunuza ilişkin detaylar aşağıdadır.\n\n" +
-                    "Başvuru Numarası: " + application.getId() +
+                    "Başvuru Numarası: " + application.getApplicationId() +
+                    "\nKimlik Numarası: " + application.getPersonalId() +
                     "\nAdı Soyadı: " + application.getName() +
                     "\nE-posta: " + application.getEmail() +
                     "\nALES Puanı: " + application.getAlesScore() +
-                    "\nYDS Puanı: " +application.getYdsScore());
+                    "\nYDS Puanı: " +application.getYdsScore() +
+                    "\nNot Ortalaması: " +application.getGpaScore());
             Transport.send(message);
 
             System.out.println("Done");
@@ -65,10 +68,10 @@ public class NotificationController {
         return "Notification has been sent successfully.";
     }
 
-    @RequestMapping("/{id}")
-    public Notification notificationItem (@PathVariable("id") long id){
-        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + id,
+    @RequestMapping("/{applicationId}")
+    public Notification notificationItem (@PathVariable("applicationId") String applicationId){
+        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + applicationId,
                 Application.class);
-        return new Notification(application.getEmail(), application.getName(), application.getId());
+        return new Notification(application);
     }
 }

@@ -6,10 +6,10 @@
 </head>
 <body>
     <h1>Başvurunuz Alındı</h1>
-    <p th:text="'Başvuru numaranız: ' + ${applicationModel.id}"></p>
-    <a th:href="'/applications/' + ${applicationModel.id}">Başvuru detaylarını görüntüle</a>
+    <p th:text="'Başvuru numaranız: ' + ${applicationModel.applicationId}"></p>
+    <a th:href="'/applications/' + ${applicationModel.applicationId}">Başvuru detaylarını görüntüle</a>
     <br />
-    <p>E-posta gönderildi.</p>
+    <p>Başvuru bilgileriniz e-posta adresinize gönderildi.</p>
 
 </body>
 </html>
