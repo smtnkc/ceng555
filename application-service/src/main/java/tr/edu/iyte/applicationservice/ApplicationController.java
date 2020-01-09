@@ -1,6 +1,5 @@
 package tr.edu.iyte.applicationservice;
 
-
 import org.apache.tomcat.util.modeler.NotificationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -31,8 +30,8 @@ public class ApplicationController {
     public String submitApplication(Application application, Model model) {
         model.addAttribute("applicationModel", application); // to use in success.html
         applicationService.addApplication(application);
-        ResponseEntity<String> result = restTemplate.exchange("http://localhost:8002/notification/email/" +
-                application.getApplicationId(), HttpMethod.GET, null, String.class);
+        ResponseEntity<String> result=restTemplate.getForEntity("http://notification-service/notification/email/" +
+                application.getApplicationId(),String.class);
         return "success";
     }
 

@@ -1,52 +1,106 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Başvuru Formu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type=number] {
-            -moz-appearance:textfield;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/reset.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
+
 <h1>Başvuru Formu</h1>
-<form action="#" th:action="@{/application}" th:object="${applicationModel}" method="post">
+
+<div class="content">
+    <span id="error"></span>
+<form action="#" th:action="@{/application}" th:object="${applicationModel}"
+      onsubmit="return validateForm()" method="post">
     <table>
         <tr>
-            <td>KİMLİK NUMARASI:</td>
-            <td><input type="number" th:field="*{personalId}" autofocus onfocus="this.value=''"/></td>
+            <td>Kimlik Numarası:</td>
+            <td><input type="text" th:field="*{personalId}" autofocus
+                       placeholder="11 rakam"
+                       id="personalId" title="11 rakam"></td>
         </tr>
         <tr>
-            <td>ADI SOYADI:</td>
-            <td><input type="text" th:field="*{name}"/></td>
+            <td>Adı Soyadı:</td>
+            <td><input type="text" th:field="*{name}"
+                       placeholder="En az iki kelime"
+                       id="name" title="En az iki kelime"></td>
         </tr>
         <tr>
-            <td>ALES PUANI:</td>
-            <td><input type="number" step="0.01" th:field="*{alesScore}" onfocus="this.value=''" /></td>
+            <td>ALES Puanı:</td>
+            <td><input type="text" th:field="*{alesScore}"
+                       placeholder="70.0 - 100.0 aralığında"
+                       id="alesScore" title="70.0 - 100 aralığında"></td>
         </tr>
         <tr>
-            <td>YDS PUANI:</td>
-            <td><input type="number" step="0.01" th:field="*{ydsScore}" onfocus="this.value=''" /></td>
+            <td>YDS Puanı:</td>
+            <td><input type="text" th:field="*{ydsScore}"
+                       placeholder="70.0 - 100.0 aralığında"
+                       id="ydsScore" title="70.0 - 100 aralığında"></td>
         </tr>
         <tr>
-            <td>NOT ORTALAMASI:</td>
-            <td><input type="number" step="0.01" th:field="*{gpaScore}" onfocus="this.value=''" /></td>
+            <td>Not Ortalaması:</td>
+            <td><input type="text" th:field="*{gpaScore}"
+                       placeholder="00.0 - 100.0 aralığında"
+                       id="gpaScore" title="00.0 - 100.0 aralığında"></td>
         </tr>
         <tr>
-            <td>E-POSTA ADRESİ:</td>
-            <td><input type="text" th:field="*{email}" autofocus/></td>
+            <td>E-posta Adresi:</td>
+            <td><input type="email" th:field="*{email}"
+                       placeholder="mail@mail.com formatında"
+                       id="email" title="mail@mail.com formatında"></td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Kaydet" /> <input type="reset" value="Sıfırla" /></td>
+            <td><input type="submit" value="Kaydet" id="submit"></td>
         </tr>
     </table>
 </form>
+</div>
+<script>
+    let personalId = document.getElementById("personalId");
+    let name = document.getElementById("name");
+    let alesScore = document.getElementById("alesScore");
+    let ydsScore = document.getElementById("ydsScore");
+    let gpaScore = document.getElementById("gpaScore");
+    let email = document.getElementById("email");
+    let error = document.getElementById("error");
+
+    alesScore.value=""
+    ydsScore.value=""
+    gpaScore.value=""
+
+    console.log(isAllFilled())
+    console.log(isAllMatched())
+
+    function isAllFilled() {
+        return personalId.value!=""&&name.value!=""&&
+            alesScore.value!=""&&ydsScore.value!=""&&
+            gpaScore.value!=""&&email.value!="";
+    }
+
+    function isAllMatched() {
+        return /^\d{11}$/.test(personalId.value)&&
+            /^[a-zA-ZığüşöçĞÜŞÖÇİ]+( ([a-zA-ZığüşöçĞÜŞÖÇİ]+))+$/.test(name.value)&&
+            /^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(alesScore.value)&&
+            /^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(ydsScore.value)&&
+            /^100(\.[0]{1,4})?|([0-9]|[7-9][0-9])(\.[0-9]{1,4})?$/.test(gpaScore.value)&&
+            /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email.value);
+    }
+
+    function validateForm() {
+        if(isAllFilled()||isAllMatched()) {
+            console.log("VALID")
+            return true;
+        }
+        else {
+            console.log("INVALID");
+            error.innerHTML = "Lütfen tüm alanları uygun şekilde doldurun.";
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

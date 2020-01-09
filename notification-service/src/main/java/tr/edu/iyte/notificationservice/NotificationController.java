@@ -21,8 +21,8 @@ public class NotificationController {
     @RequestMapping("/email/{applicationId}")
     public String notificationMail(@PathVariable("applicationId") String applicationId){
 
-        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + applicationId,
-                Application.class);
+        Application application = restTemplate.getForObject("http://application-service/applications/" +
+                        applicationId, Application.class);
 
         final String username = "ceng555grad@gmail.com";
         final String password = "cdbzxudnmjnsmlqv";
@@ -70,8 +70,8 @@ public class NotificationController {
 
     @RequestMapping("/{applicationId}")
     public Notification notificationItem (@PathVariable("applicationId") String applicationId){
-        Application application = restTemplate.getForObject("http://localhost:8001/applications/" + applicationId,
-                Application.class);
+        Application application = restTemplate.getForObject("http://application-service/applications/" +
+                applicationId, Application.class);
         return new Notification(application);
     }
 }

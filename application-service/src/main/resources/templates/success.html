@@ -1,15 +1,20 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Başvuru Durumu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/reset.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <h1>Başvurunuz Alındı</h1>
-    <p th:text="'Başvuru numaranız: ' + ${applicationModel.applicationId}"></p>
-    <a th:href="'/applications/' + ${applicationModel.applicationId}">Başvuru detaylarını görüntüle</a>
-    <br />
-    <p>Başvuru bilgileriniz e-posta adresinize gönderildi.</p>
 
+    <h1>Başvurunuz Alındı</h1>
+    <div class="content">
+    <p th:text="'Başvuru numaranız: ' + ${applicationModel.applicationId}"></p><br />
+    <a th:href="'/applications/' + ${applicationModel.applicationId}">Başvuru detaylarını görüntüle</a>
+    <br /><br />
+    <p>Başvuru bilgileriniz e-posta adresinize gönderildi.</p>
+    </div>
 </body>
 </html>
