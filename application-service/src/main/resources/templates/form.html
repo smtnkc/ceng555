@@ -41,8 +41,8 @@
         <tr>
             <td>Not Ortalaması:</td>
             <td><input type="text" th:field="*{gpaScore}"
-                       placeholder="00.0 - 100.0 aralığında"
-                       id="gpaScore" title="00.0 - 100.0 aralığında"></td>
+                       placeholder="50.0 - 100.0 aralığında"
+                       id="gpaScore" title="50.0 - 100.0 aralığında"></td>
         </tr>
         <tr>
             <td>E-posta Adresi:</td>
@@ -52,70 +52,13 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Kaydet" id="submit"></td>
+            <td><input type="submit" value="Kaydet" id="submit">
+                <input type="button" value="Doldur" id="fill" onclick="fillForm()">
+                <input type="button" value="Temizle" id="reset" onclick="resetForm()"></td>
         </tr>
     </table>
 </form>
 </div>
-<script>
-    let personalId = document.getElementById("personalId");
-    let name = document.getElementById("name");
-    let alesScore = document.getElementById("alesScore");
-    let ydsScore = document.getElementById("ydsScore");
-    let gpaScore = document.getElementById("gpaScore");
-    let email = document.getElementById("email");
-
-    alesScore.value=""
-    ydsScore.value=""
-    gpaScore.value=""
-
-    function validateForm() {
-        let validCount = 0
-        if(personalId.value==""||!/^\d{11}$/.test(personalId.value)) {
-            personalId.className = "invalidTextBox";
-        }
-        else {
-            personalId.className = "";
-            validCount++;
-        }
-        if(name.value==""||!/^[a-zA-ZığüşöçĞÜŞÖÇİ]+( ([a-zA-ZığüşöçĞÜŞÖÇİ]+))+$/.test(name.value)) {
-            name.className = "invalidTextBox";
-        }
-        else {
-            name.className = "";
-            validCount++;
-        }
-        if(alesScore.value==""||!/^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(alesScore.value)) {
-            alesScore.className = "invalidTextBox";
-        }
-        else {
-            alesScore.className = "";
-            validCount++;
-        }
-        if(ydsScore.value==""||!/^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(ydsScore.value)) {
-            ydsScore.className = "invalidTextBox";
-        }
-        else {
-            ydsScore.className = "";
-            validCount++;
-        }
-        if(gpaScore.value==""||!/^100(\.[0]{1,4})?|([0-9]|[7-9][0-9])(\.[0-9]{1,4})?$/.test(gpaScore.value)) {
-            gpaScore.className = "invalidTextBox";
-        }
-        else {
-            gpaScore.className = "";
-            validCount++;
-        }
-        if(email.value==""||!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email.value)) {
-            email.className = "invalidTextBox";
-        }
-        else {
-            email.className = "";
-            validCount++;
-        }
-        console.log("validCount = " + validCount);
-        return validCount == 6;
-    }
-</script>
+<script src="/validation.js"></script>
 </body>
 </html>

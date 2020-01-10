@@ -16,7 +16,7 @@ input {
     font-family: 'Varela Round', sans-serif;
     margin-left: 10px;
 }
-input#submit {
+input#submit, input#fill, input#reset {
     margin-top: 10px;
     padding: 8px;
     border: 0;
@@ -24,7 +24,7 @@ input#submit {
     cursor: pointer;
 }
 
-input#submit:hover {
+input#submit:hover, input#fill:hover, input#reset:hover {
     background: #dedede;
 }
 
