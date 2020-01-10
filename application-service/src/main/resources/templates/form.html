@@ -10,9 +10,7 @@
 <body>
 
 <h1>Başvuru Formu</h1>
-
 <div class="content">
-    <span id="error"></span>
 <form action="#" th:action="@{/application}" th:object="${applicationModel}"
       onsubmit="return validateForm()" method="post">
     <table>
@@ -48,7 +46,7 @@
         </tr>
         <tr>
             <td>E-posta Adresi:</td>
-            <td><input type="email" th:field="*{email}"
+            <td><input type="text" th:field="*{email}"
                        placeholder="mail@mail.com formatında"
                        id="email" title="mail@mail.com formatında"></td>
         </tr>
@@ -66,40 +64,57 @@
     let ydsScore = document.getElementById("ydsScore");
     let gpaScore = document.getElementById("gpaScore");
     let email = document.getElementById("email");
-    let error = document.getElementById("error");
 
     alesScore.value=""
     ydsScore.value=""
     gpaScore.value=""
 
-    console.log(isAllFilled())
-    console.log(isAllMatched())
-
-    function isAllFilled() {
-        return personalId.value!=""&&name.value!=""&&
-            alesScore.value!=""&&ydsScore.value!=""&&
-            gpaScore.value!=""&&email.value!="";
-    }
-
-    function isAllMatched() {
-        return /^\d{11}$/.test(personalId.value)&&
-            /^[a-zA-ZığüşöçĞÜŞÖÇİ]+( ([a-zA-ZığüşöçĞÜŞÖÇİ]+))+$/.test(name.value)&&
-            /^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(alesScore.value)&&
-            /^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(ydsScore.value)&&
-            /^100(\.[0]{1,4})?|([0-9]|[7-9][0-9])(\.[0-9]{1,4})?$/.test(gpaScore.value)&&
-            /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email.value);
-    }
-
     function validateForm() {
-        if(isAllFilled()||isAllMatched()) {
-            console.log("VALID")
-            return true;
+        let validCount = 0
+        if(personalId.value==""||!/^\d{11}$/.test(personalId.value)) {
+            personalId.className = "invalidTextBox";
         }
         else {
-            console.log("INVALID");
-            error.innerHTML = "Lütfen tüm alanları uygun şekilde doldurun.";
-            return false;
+            personalId.className = "";
+            validCount++;
         }
+        if(name.value==""||!/^[a-zA-ZığüşöçĞÜŞÖÇİ]+( ([a-zA-ZığüşöçĞÜŞÖÇİ]+))+$/.test(name.value)) {
+            name.className = "invalidTextBox";
+        }
+        else {
+            name.className = "";
+            validCount++;
+        }
+        if(alesScore.value==""||!/^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(alesScore.value)) {
+            alesScore.className = "invalidTextBox";
+        }
+        else {
+            alesScore.className = "";
+            validCount++;
+        }
+        if(ydsScore.value==""||!/^100(\.[0]{1,4})?|([7-9][0-9])(\.[0-9]{1,4})?$/.test(ydsScore.value)) {
+            ydsScore.className = "invalidTextBox";
+        }
+        else {
+            ydsScore.className = "";
+            validCount++;
+        }
+        if(gpaScore.value==""||!/^100(\.[0]{1,4})?|([0-9]|[7-9][0-9])(\.[0-9]{1,4})?$/.test(gpaScore.value)) {
+            gpaScore.className = "invalidTextBox";
+        }
+        else {
+            gpaScore.className = "";
+            validCount++;
+        }
+        if(email.value==""||!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email.value)) {
+            email.className = "invalidTextBox";
+        }
+        else {
+            email.className = "";
+            validCount++;
+        }
+        console.log("validCount = " + validCount);
+        return validCount == 6;
     }
 </script>
 </body>

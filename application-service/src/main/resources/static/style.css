@@ -8,25 +8,33 @@ h1 {
     font-size: 24pt;
     margin-bottom: 15px;
 }
+.content {
+    margin-left: 3px;
+}
 input {
     font-size: 11pt;
     font-family: 'Varela Round', sans-serif;
-    padding: 6px;
     margin-left: 10px;
 }
-#submit {
+input#submit {
     margin-top: 10px;
-}
-input[type=text], input[type=email] {
-    width: 220px;
-    margin-top: 5px;
-}
-#error {
-    color: red;
-    display: block;
-    margin-bottom:10px;
+    padding: 8px;
+    border: 0;
+    background: #eeeeee;
+    cursor: pointer;
 }
 
-.content {
-    margin-left: 3px;
+input#submit:hover {
+    background: #dedede;
+}
+
+input[type=text] {
+    width: 220px;
+    margin-top: 5px;
+    border: 2px solid #cccccc;
+    padding: 6px;
+}
+
+input.invalidTextBox {
+    border: 2px solid #f17362;
 }
