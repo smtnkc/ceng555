@@ -28,7 +28,7 @@ java -jar notification-service/target/notification-service-0.0.1-SNAPSHOT.jar
 
 ## Step 4) Perform service calls and trace the messaging
 
-* To view Eureka discover server `http://localhost:/8000`
+* To view Eureka discover server `http://localhost:8000`
 * To submit an application: ``http://localhost:8001/application``
 * To view all applications: ``http://localhost:8001/applications``
 * To view application with an ID: ``http://localhost:8001/applications/{applicationId}``
