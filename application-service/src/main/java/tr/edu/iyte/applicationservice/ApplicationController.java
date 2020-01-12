@@ -1,6 +1,16 @@
 package tr.edu.iyte.applicationservice;
 
-import org.apache.tomcat.util.modeler.NotificationInfo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +19,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.jms.Queue;
+import javax.jms.TextMessage;
 
+import org.apache.tomcat.util.modeler.NotificationInfo;
 import java.util.List;
 
 @Controller
 public class ApplicationController {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private Queue applicationIdQueue;
+    private JmsTemplate jmsTemplate;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationMessageConverter.class);
 
     private ApplicationService applicationService = new ApplicationService();
+
+    @Autowired
+    public ApplicationController(Queue applicationIdQueue, JmsTemplate jmsTemplate) {
+        this.applicationIdQueue = applicationIdQueue;
+        this.jmsTemplate = jmsTemplate;
+    }
 
     @GetMapping("/application")
     public String getApplicationForm(Model model) {
@@ -30,8 +51,13 @@ public class ApplicationController {
     public String submitApplication(Application application, Model model) {
         model.addAttribute("applicationModel", application); // to use in success.html
         applicationService.addApplication(application);
-        ResponseEntity<String> result=restTemplate.getForEntity("http://notification-service/notification/email/" +
-                application.getApplicationId(),String.class);
+
+        // set message header as applicationId and add into application-queue
+        jmsTemplate.convertAndSend(applicationIdQueue, application, message -> {
+            message.setJMSCorrelationID(application.getApplicationId());
+            return message;
+        });
+        LOGGER.info("Message is added into the queue");
         return "success";
     }
 

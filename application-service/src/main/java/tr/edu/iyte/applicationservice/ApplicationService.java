@@ -17,10 +17,10 @@ public class ApplicationService {
 
     private ApplicationList applicationList = fileIO.readApplicationList();
 
-    public ApplicationList getApplicationList() { return applicationList; }
+    public ApplicationList getApplicationList() { return fileIO.readApplicationList(); }
 
     public Application getApplication(String applicationId) {
-        return applicationList.getApplication(applicationId);
+        return fileIO.readApplicationList().getApplication(applicationId);
     }
 
     public void setApplicationList(List<Application> applications) {
