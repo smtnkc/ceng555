@@ -15,6 +15,7 @@ import javax.jms.TextMessage;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,16 +33,19 @@ public class NotificationController {
     private Queue notificationResponseQueue;
     private JmsTemplate jmsTemplate;
     private RestTemplate restTemplate;
+    private FileIO fileIO;
 
     @Autowired
-    public NotificationController(Queue notificationResponseQueue, JmsTemplate jmsTemplate, RestTemplate restTemplate) {
+    public NotificationController(Queue notificationResponseQueue, JmsTemplate jmsTemplate,
+                                  RestTemplate restTemplate, FileIO fileIO) {
         this.notificationResponseQueue = notificationResponseQueue;
         this.jmsTemplate = jmsTemplate;
         this.restTemplate = restTemplate;
+        this.fileIO = fileIO;
     }
 
     @JmsListener(destination = "application-queue")
-    public void sendNotification(Application application){
+    public void asyncNotification(Application application){
 
         String applicationId = application.getApplicationId();
         LOGGER.info("Application [{}] received.", applicationId);
@@ -62,9 +66,37 @@ public class NotificationController {
         LOGGER.info(responseText.get());
     }
 
+    @RequestMapping("/send/{applicationId}")
+    public String manualNotification(@PathVariable("applicationId") String applicationId) {
+
+        LOGGER.info("Manual notification [{}] request received.", applicationId);
+
+        Application application = restTemplate.getForObject("http://application-service/applications/" +
+                applicationId, Application.class);
+
+        AtomicReference<String> responseText = new AtomicReference<>("");
+
+        if(mailSender(application)) {
+            responseText.set("Manual notification [" + applicationId + "] successful.");
+        } else {
+            responseText.set("Manual notification [" + applicationId + "] failed.");
+        }
+
+        jmsTemplate.send("notification-response-queue", messageCreator -> {
+            TextMessage textMessage = messageCreator.createTextMessage(responseText.get());
+            textMessage.setJMSCorrelationID(applicationId);
+            return textMessage;
+        });
+
+        LOGGER.info(responseText.get());
+        return responseText.get();
+    }
+
     public boolean mailSender(Application application) {
-        final String username = "ceng555grad@gmail.com";
-        final String password = "cdbzxudnmjnsmlqv";
+
+        MailAuth mailAuth = fileIO.readMailAuth();
+        final String username = mailAuth.getUsername(); // Requires mailAuth.json in main directory
+        final String password = mailAuth.getPassword(); // Requires mailAuth.json in main directory
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");

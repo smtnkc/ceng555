@@ -60,7 +60,7 @@ function fillForm() {
     alesScore.value = Math.round((Math.random()*30+70)*10)/10; // [70.0, 100.0]
     ydsScore.value = Math.round((Math.random()*30+70)*10)/10;  // [70.0, 100.0]
     gpaScore.value = Math.round((Math.random()*50+50)*10)/10;  // [50.0, 100.0]
-    email.value = "samettenekeci@gmail.com";
+    email.value = "samet@janmail.org";
 }
 function getRandomName() {
     let result = "";

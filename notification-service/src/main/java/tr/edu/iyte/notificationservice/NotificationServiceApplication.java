@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import javax.jms.Queue;
+import java.io.File;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -24,12 +25,13 @@ public class NotificationServiceApplication {
     }
 
     @Bean
+    public FileIO fileIO() { return new FileIO(); }
+
+    @Bean
     public Queue queue(){
         return new ActiveMQQueue("notification-response-queue");
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(NotificationServiceApplication.class, args);
-    }
+    public static void main(String[] args) { SpringApplication.run(NotificationServiceApplication.class, args); }
 
 }
