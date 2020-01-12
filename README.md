@@ -6,6 +6,15 @@
 * Install [Apache Maven](https://maven.apache.org/install.html)
 * Install [Apache ActiveMQ Message Broker](https://activemq.apache.org/components/classic/)
 
+## Step 0) Set email credentials:
+In main directory, create a ``mailAuth.json`` file as shown below to set username and password. These credentials are used by ``notification-service`` to send emails.
+
+```json
+{
+  "username":"******@gmail.com",
+  "password":"****************"
+}
+```
 
 ## Step 1) Start Apache ActiveMQ broker for async messaging
 ```bash
